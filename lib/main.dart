@@ -1,5 +1,20 @@
 import 'package:flutter/material.dart';
 
+class ItemData {
+  final String title;
+  final String description;
+  final double price;
+  final String asset;
+  final bool isWishlist;
+  ItemData({
+    required this.title,
+    required this.description,
+    required this.price,
+    required this.asset,
+    required this.isWishlist,
+  });
+}
+
 void main() => runApp(const MyApp());
 
 class MyApp extends StatefulWidget {
@@ -11,6 +26,38 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   int currentIndex = 0;
+
+  List<ItemData> items = [
+    ItemData(
+      title: "PEUGEOT-LR01",
+      description: "Road Bike",
+      price: 1999.99,
+      asset: "assets/cyclehercules.jpg",
+      isWishlist: false,
+    ),
+    ItemData(
+      title: "SMITH-Trade",
+      description: "Road Helmet",
+      price: 20,
+      asset: "assets/helmet.png",
+      isWishlist: true,
+    ),
+    ItemData(
+      title: "Hercules",
+      description: "street cycle",
+      price: 1300,
+      asset: "assets/cyclehercules.jpg",
+      isWishlist: false,
+    ),
+
+    ItemData(
+      title: "Atlas",
+      description: "Hill rider",
+      price: 3000.86,
+      asset: "assets/cycleatlas.jpg",
+      isWishlist: true,
+    )
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -67,9 +114,9 @@ class _MyAppState extends State<MyApp> {
                         ),
                       ),
                       Positioned(
-                        right: 10,
-                        bottom: 10,
-                        child: Image.asset('assets/bike.png', width: 150),
+                        left: 10,
+                        top: 10,
+                        child: Image.asset('assets/bike.jpg', width: 300),
                       ),
                     ],
                   ),
@@ -101,7 +148,7 @@ class _MyAppState extends State<MyApp> {
                 Expanded(
                   child: GridView.builder(
                     padding: const EdgeInsets.only(top: 10),
-                    itemCount: 6,
+                    itemCount: items.length,
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2,
@@ -120,32 +167,37 @@ class _MyAppState extends State<MyApp> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment: MainAxisAlignment.end,
-                                children: const [
+
+                                children: [
+                                  Image.asset(items[index].asset, height: 100),
                                   Text(
-                                    "Road Bike",
+                                    items[index].description,
                                     style: TextStyle(color: Colors.white),
                                   ),
                                   Text(
-                                    "PEUGEOT - LR01",
+                                    items[index].title,
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       color: Colors.white,
                                     ),
                                   ),
                                   Text(
-                                    "\$1,999.99",
+                                    "\$ ${items[index].description}",
                                     style: TextStyle(color: Colors.white70),
                                   ),
                                 ],
                               ),
                             ),
+
                             Positioned(
                               top: 5,
                               right: 5,
                               child: IconButton(
                                 onPressed: () {},
-                                icon: const Icon(
-                                  Icons.favorite_border,
+                                icon: Icon(
+                                  items[index].isWishlist
+                                      ? Icons.favorite
+                                      : Icons.favorite_outline,
                                   color: Colors.white,
                                 ),
                               ),
